@@ -395,51 +395,99 @@ TEMPLATES_COPY = {
         (
             f"🌅 *Bom dia com economia!*\n\n"
             f"*{'{nome}'}*\n\n"
-            f"~~{'{antigo}'}~~ ➡️ *{'{preco}'}*\n"
-            f"🏷️ *{'{desc}'}% OFF* pra começar bem o dia\n\n"
+            f"~~{'{antigo}'}~~ 🏷️ *{'{desc}'}% OFF*\n"
+            f"*{'{preco}'}* só pra você ☀️\n\n"
             f"⭐ {'{rating}'} | 🛒 {'{vendas}'} vendidos\n\n"
             f"👇 Garanta o seu:\n{'{link}'}"
         ),
         (
             f"☀️ *Achado da manhã!*\n\n"
-            f"{'{nome}'}\n\n"
-            f"💸 De ~~{'{antigo}'}~~ por *{'{preco}'}*\n"
-            f"Isso é *{'{desc}'}% de desconto* real\n\n"
-            f"⭐ {'{rating}'} · {'{vendas}'} pedidos\n\n"
+            f"*{'{nome}'}*\n\n"
+            f"~~{'{antigo}'}~~ 🏷️ *{'{desc}'}% OFF*\n"
+            f"*{'{preco}'}* — desconto real pra começar bem 💪\n\n"
+            f"⭐ {'{rating}'} · 🛒 {'{vendas}'} pedidos\n\n"
             f"🔗 {'{link}'}"
         ),
         (
             f"🚀 *Comece o dia com o pé direito!*\n\n"
             f"*{'{nome}'}*\n\n"
-            f"*{'{preco}'}* — {'{desc}'}% mais barato\n"
-            f"~~Era {'{antigo}'}~~\n\n"
+            f"~~{'{antigo}'}~~ 🏷️ *{'{desc}'}% OFF*\n"
+            f"*{'{preco}'}* esperando por você 👀\n\n"
             f"📦 {'{vendas}'} pessoas já têm esse · ⭐ {'{rating}'}\n\n"
             f"👉 {'{link}'}"
+        ),
+        (
+            f"💡 *Oferta que faz sentido!*\n\n"
+            f"*{'{nome}'}*\n\n"
+            f"~~{'{antigo}'}~~ 🏷️ *{'{desc}'}% OFF*\n"
+            f"*{'{preco}'}* — economia de verdade logo cedo 🌄\n\n"
+            f"⭐ {'{rating}'} | 🛒 {'{vendas}'} vendidos\n\n"
+            f"👇 Aproveita:\n{'{link}'}"
+        ),
+        (
+            f"🎯 *Não passa não!*\n\n"
+            f"*{'{nome}'}*\n\n"
+            f"~~{'{antigo}'}~~ 🏷️ *{'{desc}'}% OFF*\n"
+            f"*{'{preco}'}* pra você que tá ligado 🔔\n\n"
+            f"⭐ {'{rating}'} · 🛒 {'{vendas}'} pedidos\n\n"
+            f"👉 {'{link}'}"
+        ),
+        (
+            f"☕ *Melhor que café da manhã!*\n\n"
+            f"*{'{nome}'}*\n\n"
+            f"~~{'{antigo}'}~~ 🏷️ *{'{desc}'}% OFF*\n"
+            f"*{'{preco}'}* — {'{desc}'}% a menos no seu bolso 💰\n\n"
+            f"📦 {'{vendas}'} pedidos · ⭐ {'{rating}'}\n\n"
+            f"🔗 {'{link}'}"
         ),
     ],
     "almoco": [
         (
             f"⚡ *Oferta que pode acabar hoje!*\n\n"
             f"*{'{nome}'}*\n\n"
-            f"~~{'{antigo}'}~~ ➡️ *{'{preco}'}*\n"
-            f"🔥 *{'{desc}'}% OFF agora*\n\n"
+            f"~~{'{antigo}'}~~ 🏷️ *{'{desc}'}% OFF*\n"
+            f"*{'{preco}'}* só enquanto tem estoque 🔥\n\n"
             f"🛒 {'{vendas}'} já levaram · ⭐ {'{rating}'}\n\n"
             f"👇 Corre antes de acabar:\n{'{link}'}"
         ),
         (
             f"🎯 *Pausa do almoço + oferta boa!*\n\n"
-            f"{'{nome}'}\n\n"
-            f"💥 *{'{desc}'}% OFF*\n"
-            f"De ~~{'{antigo}'}~~ por *{'{preco}'}*\n\n"
-            f"⭐ {'{rating}'} | {'{vendas}'} vendidos\n\n"
+            f"*{'{nome}'}*\n\n"
+            f"~~{'{antigo}'}~~ 🏷️ *{'{desc}'}% OFF*\n"
+            f"*{'{preco}'}* — vale demais pra ignorar 👊\n\n"
+            f"⭐ {'{rating}'} | 🛒 {'{vendas}'} vendidos\n\n"
             f"🔗 {'{link}'}"
         ),
         (
             f"🏃 *Ideal pro seu dia corrido!*\n\n"
             f"*{'{nome}'}*\n\n"
-            f"Por apenas *{'{preco}'}*\n"
-            f"🏷️ {'{desc}'}% OFF — ~~antes {'{antigo}'}~~\n\n"
-            f"📊 {'{vendas}'} pedidos · {'{rating}'}⭐\n\n"
+            f"~~{'{antigo}'}~~ 🏷️ *{'{desc}'}% OFF*\n"
+            f"*{'{preco}'}* esperando no carrinho 🛒\n\n"
+            f"📊 {'{vendas}'} pedidos · ⭐ {'{rating}'}\n\n"
+            f"👉 {'{link}'}"
+        ),
+        (
+            f"💥 *Desconto pesado no almoço!*\n\n"
+            f"*{'{nome}'}*\n\n"
+            f"~~{'{antigo}'}~~ 🏷️ *{'{desc}'}% OFF*\n"
+            f"*{'{preco}'}* — {'{desc}'}% a menos pra você ✅\n\n"
+            f"⭐ {'{rating}'} · 🛒 {'{vendas}'} vendidos\n\n"
+            f"👇 Garante agora:\n{'{link}'}"
+        ),
+        (
+            f"🍽️ *Enquanto você almoça, economiza!*\n\n"
+            f"*{'{nome}'}*\n\n"
+            f"~~{'{antigo}'}~~ 🏷️ *{'{desc}'}% OFF*\n"
+            f"*{'{preco}'}* só pra quem tá esperto 👀\n\n"
+            f"⭐ {'{rating}'} | 🛒 {'{vendas}'} pedidos\n\n"
+            f"🔗 {'{link}'}"
+        ),
+        (
+            f"⏰ *Não deixa pra depois!*\n\n"
+            f"*{'{nome}'}*\n\n"
+            f"~~{'{antigo}'}~~ 🏷️ *{'{desc}'}% OFF*\n"
+            f"*{'{preco}'}* — oferta de meio-dia 🌞\n\n"
+            f"📦 {'{vendas}'} levaram · ⭐ {'{rating}'}\n\n"
             f"👉 {'{link}'}"
         ),
     ],
@@ -447,25 +495,49 @@ TEMPLATES_COPY = {
         (
             f"🌙 *Você merece esse!*\n\n"
             f"*{'{nome}'}*\n\n"
-            f"~~{'{antigo}'}~~ ➡️ *{'{preco}'}*\n"
-            f"🏷️ *{'{desc}'}% OFF*\n\n"
-            f"⭐ {'{rating}'} · {'{vendas}'} pessoas amando\n\n"
+            f"~~{'{antigo}'}~~ 🏷️ *{'{desc}'}% OFF*\n"
+            f"*{'{preco}'}* só pra você essa noite ✨\n\n"
+            f"⭐ {'{rating}'} · 🛒 {'{vendas}'} pessoas amando\n\n"
             f"👇 Trata-se:\n{'{link}'}"
         ),
         (
             f"🛋️ *Hora de cuidar de você!*\n\n"
-            f"{'{nome}'}\n\n"
-            f"💸 De ~~{'{antigo}'}~~ por *{'{preco}'}*\n"
-            f"Isso é *{'{desc}'}% de desconto* real\n\n"
-            f"⭐ {'{rating}'} | {'{vendas}'} vendidos\n\n"
+            f"*{'{nome}'}*\n\n"
+            f"~~{'{antigo}'}~~ 🏷️ *{'{desc}'}% OFF*\n"
+            f"*{'{preco}'}* — desconto real pra fechar o dia bem 💜\n\n"
+            f"⭐ {'{rating}'} | 🛒 {'{vendas}'} vendidos\n\n"
             f"🔗 {'{link}'}"
         ),
         (
             f"✨ *Achado da noite!*\n\n"
             f"*{'{nome}'}*\n\n"
-            f"*{'{preco}'}* — {'{desc}'}% mais barato\n"
-            f"~~Era {'{antigo}'}~~\n\n"
+            f"~~{'{antigo}'}~~ 🏷️ *{'{desc}'}% OFF*\n"
+            f"*{'{preco}'}* esperando no carrinho 🛒\n\n"
             f"🌟 {'{rating}'}⭐ · {'{vendas}'} pedidos\n\n"
+            f"👉 {'{link}'}"
+        ),
+        (
+            f"🌃 *Oferta pra fechar o dia no lucro!*\n\n"
+            f"*{'{nome}'}*\n\n"
+            f"~~{'{antigo}'}~~ 🏷️ *{'{desc}'}% OFF*\n"
+            f"*{'{preco}'}* — {'{desc}'}% de economia pra você 💸\n\n"
+            f"⭐ {'{rating}'} | 🛒 {'{vendas}'} vendidos\n\n"
+            f"👇 Garanta antes de dormir:\n{'{link}'}"
+        ),
+        (
+            f"😴 *Última chance do dia!*\n\n"
+            f"*{'{nome}'}*\n\n"
+            f"~~{'{antigo}'}~~ 🏷️ *{'{desc}'}% OFF*\n"
+            f"*{'{preco}'}* só pra quem não perdeu 👀\n\n"
+            f"⭐ {'{rating}'} · 🛒 {'{vendas}'} pedidos\n\n"
+            f"🔗 {'{link}'}"
+        ),
+        (
+            f"🔮 *Nem acredito nesse preço!*\n\n"
+            f"*{'{nome}'}*\n\n"
+            f"~~{'{antigo}'}~~ 🏷️ *{'{desc}'}% OFF*\n"
+            f"*{'{preco}'}* — vale muito mais que isso 🤩\n\n"
+            f"📦 {'{vendas}'} pedidos · ⭐ {'{rating}'}\n\n"
             f"👉 {'{link}'}"
         ),
     ],
