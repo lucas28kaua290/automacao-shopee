@@ -335,12 +335,18 @@ def curar(produtos: list[dict]) -> list[dict]:
         comis_r = _f(p.get("commission"))
         item_id = str(p.get("itemId", ""))
 
-        if rating < MIN_RATING:                         continue
-        if sales < MIN_SALES:                           continue
-        if not (MIN_PRICE <= preco <= MAX_PRICE):       continue
-        if desconto < MIN_DISCOUNT_PCT:                 continue
-        if comis_p < MIN_COMMISSION_PCT and comis_r < MIN_COMMISSION_BRL: continue
-        if ja_enviado(item_id):                         continue
+        if rating < MIN_RATING:
+            log.info("REPROVADO rating %.1f — %s", rating, p.get("productName","")[:40]); continue
+        if sales < MIN_SALES:
+            log.info("REPROVADO vendas %.0f — %s", sales, p.get("productName","")[:40]); continue
+        if not (MIN_PRICE <= preco <= MAX_PRICE):
+            log.info("REPROVADO preço %.2f — %s", preco, p.get("productName","")[:40]); continue
+        if desconto < MIN_DISCOUNT_PCT:
+            log.info("REPROVADO desconto %.1f%% — %s", desconto, p.get("productName","")[:40]); continue
+        if comis_p < MIN_COMMISSION_PCT and comis_r < MIN_COMMISSION_BRL:
+            log.info("REPROVADO comissão %.1f%% / R$%.2f — %s", comis_p, comis_r, p.get("productName","")[:40]); continue
+        if ja_enviado(item_id):
+            log.info("REPROVADO já enviado — %s", p.get("productName","")[:40]); continue
 
         p["_tema"]     = tema
         p["_score"]    = _score_final(p, tema)
