@@ -39,7 +39,7 @@ DRY_RUN             = os.getenv("DRY_RUN", "true").lower() == "true"
 DB_PATH             = os.getenv("DB_PATH", "shopee.db")
 
 # Filtros de curadoria
-MIN_RATING          = 4.0
+MIN_RATING          = 4.5
 MIN_SALES           = 100
 MIN_PRICE           = 29.90
 MAX_PRICE           = 500.0
@@ -49,7 +49,7 @@ MIN_COMMISSION_BRL  = 5.0
 ANTI_REPEAT_DAYS    = 7
 MIN_INTERVAL_MIN    = 20
 MAX_PER_CYCLE       = 15
-PRODUCTS_PER_SLOT   = 5
+PRODUCTS_PER_SLOT   = 1
 
 # ══════════════════════════════════════════════════════
 # LOGGING
@@ -96,6 +96,11 @@ def init_db():
                 agendado    TIMESTAMP,
                 status      TEXT DEFAULT 'pending'
             );
+            CREATE TABLE IF NOT EXISTS keywords_usadas (
+                keyword     TEXT NOT NULL,
+                tema        TEXT NOT NULL,
+                data_uso    DATE NOT NULL
+            );
         """)
 
 
@@ -111,6 +116,24 @@ def ja_enviado(item_id: str) -> bool:
 def marcar_enviado(item_id: str, nome: str):
     with db() as conn:
         conn.execute("INSERT INTO enviados (item_id, nome) VALUES (?,?)", (item_id, nome))
+
+
+def keyword_ja_usada_hoje(keyword: str, tema: str) -> bool:
+    cutoff = (datetime.now() - timedelta(days=2)).date()
+    with db() as conn:
+        return conn.execute(
+            "SELECT 1 FROM keywords_usadas WHERE keyword=? AND tema=? AND data_uso>=?",
+            (keyword, tema, cutoff)
+        ).fetchone() is not None
+
+
+def marcar_keyword_usada(keyword: str, tema: str):
+    hoje = datetime.now().date()
+    with db() as conn:
+        conn.execute(
+            "INSERT INTO keywords_usadas (keyword, tema, data_uso) VALUES (?,?,?)",
+            (keyword, tema, hoje)
+        )
 
 
 def enfileirar(produtos: list[dict]):
@@ -171,7 +194,7 @@ def _auth_headers(payload_json: str) -> dict:
 def _busca_api(keyword: str) -> list[dict]:
     query = f"""
     {{
-      productOfferV2(listType:1, sortType:2, isAMSOffer:true, limit:50, keyword:"{keyword}") {{
+      productOfferV2(listType:1, sortType:2, isAMSOffer:true, limit:20, keyword:"{keyword}") {{
         nodes {{
           itemId productName imageUrl offerLink
           priceMin priceDiscountRate sales ratingStar
@@ -202,23 +225,18 @@ def buscar_produtos(tema: str) -> list[dict]:
     import random
     keywords = TEMAS[tema].copy()
 
-    kw1 = random.choice(keywords)
-    keywords.remove(kw1)
-    log.info("Buscando produtos [%s] — keyword: '%s'", tema.upper(), kw1)
-    resultado = _busca_api(kw1)
+    # Remove keywords já usadas hoje nesse tema
+    disponiveis = [kw for kw in keywords if not keyword_ja_usada_hoje(kw, tema)]
 
-    if len(resultado) < 50 and keywords:
-        kw2 = random.choice(keywords)
-        log.info("Menos de 50 resultados, buscando complemento — keyword: '%s'", kw2)
-        resultado += _busca_api(kw2)
-        # Remove duplicatas por itemId
-        vistos = set()
-        unicos = []
-        for p in resultado:
-            if p["itemId"] not in vistos:
-                vistos.add(p["itemId"])
-                unicos.append(p)
-        resultado = unicos
+    # Se todas já foram usadas hoje, reseta (recomeça do zero)
+    if not disponiveis:
+        log.warning("Todas as keywords do tema [%s] já usadas hoje. Resetando.", tema.upper())
+        disponiveis = keywords
+
+    kw = random.choice(disponiveis)
+    marcar_keyword_usada(kw, tema)
+    log.info("Buscando produtos [%s] — keyword: '%s'", tema.upper(), kw)
+    resultado = _busca_api(kw)
 
     log.info("Pool total para curadoria: %d produtos.", len(resultado))
     return resultado
@@ -333,18 +351,15 @@ def curar(produtos: list[dict]) -> list[dict]:
 
     aprovados.sort(key=lambda x: x["_score"], reverse=True)
 
-    # Tenta pegar PRODUCTS_PER_SLOT com tema, completa com fallback geral
-    tematicos  = [p for p in aprovados if _theme_score(p.get("productName", ""), tema) > 0]
-    restantes  = [p for p in aprovados if p not in tematicos]
-    selecionados = (tematicos + restantes)[:PRODUCTS_PER_SLOT]
-
-    if len(selecionados) < 4:
-        log.warning("Menos de 4 produtos disponíveis. Nada será enviado.")
+    # Pega só o melhor produto
+    if not aprovados:
+        log.warning("Nenhum produto aprovado na curadoria. Nada será enviado.")
         return []
 
-    log.info("Curadoria [%s]: %d recebidos → %d aprovados → %d selecionados (%d temáticos)",
-             tema.upper(), len(produtos), len(aprovados),
-             len(selecionados), len(tematicos[:PRODUCTS_PER_SLOT]))
+    selecionados = aprovados[:PRODUCTS_PER_SLOT]
+
+    log.info("Curadoria [%s]: %d recebidos → %d aprovados → 1 selecionado (score %.2f)",
+             tema.upper(), len(produtos), len(aprovados), selecionados[0]["_score"])
     return selecionados
 
 # ══════════════════════════════════════════════════════
@@ -504,35 +519,31 @@ def enviar(p: dict) -> bool:
 # ══════════════════════════════════════════════════════
 
 def cmd_fetch():
+    # Mantido por compatibilidade, mas não usado no fluxo principal
+    log.info("cmd_fetch chamado diretamente — use cmd_run para o ciclo completo.")
+
+
+def cmd_send():
+    # Mantido por compatibilidade, mas não usado no fluxo principal
+    log.info("cmd_send chamado diretamente — use cmd_run para o ciclo completo.")
+
+
+def cmd_run():
+    log.info("══ Ciclo completo | Modo: %s ══", "DRY RUN 🧪" if DRY_RUN else "PRODUÇÃO 🚀")
     tema = _detectar_tema()
     raw = buscar_produtos(tema)
     if not raw:
-        log.warning("Nenhum produto retornado.")
+        log.warning("Nenhum produto retornado da API.")
         return
     selecionados = curar(raw)
     if not selecionados:
         log.warning("Nenhum produto passou na curadoria. Silêncio > oferta fraca.")
         return
-    enfileirar(selecionados)
-
-
-def cmd_send():
-    p = proximo_pendente()
-    if not p:
-        log.info("Fila vazia ou nada agendado para agora.")
-        return
-    qid = p.pop("_queue_id")
+    p = selecionados[0]
     ok = enviar(p)
-    atualizar_fila(qid, "sent" if ok else "failed")
     if ok:
         marcar_enviado(str(p["itemId"]), p.get("productName", ""))
-
-
-def cmd_run():
-    log.info("══ Ciclo completo | Modo: %s ══", "DRY RUN 🧪" if DRY_RUN else "PRODUÇÃO 🚀")
-    cmd_fetch()
-    cmd_send()
-    log.info("Fila: %s", status_fila())
+    log.info("Status: %s", "✅ Enviado" if ok else "❌ Falha")
 
 
 def cmd_status():
