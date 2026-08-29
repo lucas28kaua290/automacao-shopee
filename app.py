@@ -34,6 +34,7 @@ EVOLUTION_URL       = os.getenv("EVOLUTION_URL", "")
 EVOLUTION_KEY       = os.getenv("EVOLUTION_KEY", "")
 EVOLUTION_INSTANCE  = os.getenv("EVOLUTION_INSTANCE", "")
 WHATSAPP_GROUP_ID   = os.getenv("WHATSAPP_GROUP_ID", "")
+LOG_GROUP_ID        = os.getenv("LOG_GROUP_ID", "")
 
 DRY_RUN             = os.getenv("DRY_RUN", "true").lower() == "true"
 DB_PATH             = os.getenv("DB_PATH", "shopee.db")
@@ -237,6 +238,8 @@ def buscar_produtos(tema: str) -> list[dict]:
     marcar_keyword_usada(kw, tema)
     log.info("Buscando produtos [%s] — keyword: '%s'", tema.upper(), kw)
     resultado = _busca_api(kw)
+    for item in resultado:
+        item["_keyword"] = kw
 
     log.info("Pool total para curadoria: %d produtos.", len(resultado))
     return resultado
@@ -321,32 +324,40 @@ def _score_final(p: dict, tema: str) -> float:
     return sq * 0.65 + st * 0.35
 
 
-def curar(produtos: list[dict]) -> list[dict]:
+def curar(produtos: list[dict]) -> tuple[list[dict], list[dict]]:
     tema = _detectar_tema()
     log.info("Tema do horário: %s", tema.upper())
 
     aprovados = []
+    reprovados = []
     for p in produtos:
-        rating  = _f(p.get("ratingStar"))
-        sales   = _f(p.get("sales"))
-        preco   = _preco(p.get("priceMin"))
+        rating   = _f(p.get("ratingStar"))
+        sales    = _f(p.get("sales"))
+        preco    = _preco(p.get("priceMin"))
         desconto = _pct(p.get("priceDiscountRate"))
-        comis_p = _pct(p.get("commissionRate"))
-        comis_r = _f(p.get("commission"))
-        item_id = str(p.get("itemId", ""))
+        comis_p  = _pct(p.get("commissionRate"))
+        comis_r  = _f(p.get("commission"))
+        item_id  = str(p.get("itemId", ""))
+        nome     = p.get("productName", "")
 
         if rating < MIN_RATING:
-            log.info("REPROVADO rating %.1f — %s", rating, p.get("productName","")[:40]); continue
+            log.info("REPROVADO rating %.1f — %s", rating, nome[:40])
+            reprovados.append({"nome": nome, "motivo": f"rating {rating:.1f}"}); continue
         if sales < MIN_SALES:
-            log.info("REPROVADO vendas %.0f — %s", sales, p.get("productName","")[:40]); continue
+            log.info("REPROVADO vendas %.0f — %s", sales, nome[:40])
+            reprovados.append({"nome": nome, "motivo": f"vendas {int(sales)}"}); continue
         if not (MIN_PRICE <= preco <= MAX_PRICE):
-            log.info("REPROVADO preço %.2f — %s", preco, p.get("productName","")[:40]); continue
+            log.info("REPROVADO preço %.2f — %s", preco, nome[:40])
+            reprovados.append({"nome": nome, "motivo": f"preço R${preco:.2f}"}); continue
         if desconto < MIN_DISCOUNT_PCT:
-            log.info("REPROVADO desconto %.1f%% — %s", desconto, p.get("productName","")[:40]); continue
+            log.info("REPROVADO desconto %.1f%% — %s", desconto, nome[:40])
+            reprovados.append({"nome": nome, "motivo": f"desconto {desconto:.1f}%"}); continue
         if comis_p < MIN_COMMISSION_PCT and comis_r < MIN_COMMISSION_BRL:
-            log.info("REPROVADO comissão %.1f%% / R$%.2f — %s", comis_p, comis_r, p.get("productName","")[:40]); continue
+            log.info("REPROVADO comissão %.1f%% / R$%.2f — %s", comis_p, comis_r, nome[:40])
+            reprovados.append({"nome": nome, "motivo": f"comissão {comis_p:.1f}% / R${comis_r:.2f}"}); continue
         if ja_enviado(item_id):
-            log.info("REPROVADO já enviado — %s", p.get("productName","")[:40]); continue
+            log.info("REPROVADO já enviado — %s", nome[:40])
+            reprovados.append({"nome": nome, "motivo": "já enviado"}); continue
 
         p["_tema"]     = tema
         p["_score"]    = _score_final(p, tema)
@@ -357,16 +368,15 @@ def curar(produtos: list[dict]) -> list[dict]:
 
     aprovados.sort(key=lambda x: x["_score"], reverse=True)
 
-    # Pega só o melhor produto
     if not aprovados:
         log.warning("Nenhum produto aprovado na curadoria. Nada será enviado.")
-        return []
+        return [], reprovados
 
     selecionados = aprovados[:PRODUCTS_PER_SLOT]
 
     log.info("Curadoria [%s]: %d recebidos → %d aprovados → 1 selecionado (score %.2f)",
              tema.upper(), len(produtos), len(aprovados), selecionados[0]["_score"])
-    return selecionados
+    return selecionados, reprovados
 
 # ══════════════════════════════════════════════════════
 # COPY
@@ -520,6 +530,46 @@ def enviar(p: dict) -> bool:
         log.error("❌ Falha ao enviar item %s: %s", p.get("itemId"), e)
         return False
 
+def enviar_log_whatsapp(p: dict | None, ok: bool, tema: str, keyword: str, reprovados: list[dict] = []):
+    if not LOG_GROUP_ID or DRY_RUN:
+        return
+
+    linhas_reprovados = ""
+    if reprovados:
+        linhas = []
+        for r in reprovados:
+            linhas.append(f"  • {r['nome'][:35]} → {r['motivo']}")
+        linhas_reprovados = "\n\n*❌ Reprovados:*\n" + "\n".join(linhas)
+
+    if ok and p:
+        texto = (
+            f"🤖 *Shopee Bot — Ciclo concluído*\n\n"
+            f"✅ *Enviado com sucesso*\n"
+            f"📦 {p.get('productName', '')[:60]}\n"
+            f"💰 R$ {p.get('_preco', 0):.2f} | {int(p.get('_desconto', 0))}% OFF\n"
+            f"⭐ {p.get('ratingStar', '')} | 🛒 {int(_f(p.get('sales', 0)))} vendidos\n"
+            f"🏷️ Keyword: `{keyword}`\n"
+            f"🎨 Tema: {tema.upper()}\n"
+            f"📊 Score: {p.get('_score', 0):.2f}"
+            f"{linhas_reprovados}"
+        )
+    else:
+        texto = (
+            f"🤖 *Shopee Bot — Ciclo concluído*\n\n"
+            f"❌ *Falha ou sem produto aprovado*\n"
+            f"🏷️ Keyword: `{keyword}`\n"
+            f"🎨 Tema: {tema.upper()}"
+            f"{linhas_reprovados}"
+        )
+
+    url = f"{EVOLUTION_URL}/message/sendText/{EVOLUTION_INSTANCE}"
+    payload = {"number": LOG_GROUP_ID, "text": texto}
+    try:
+        httpx.post(url, json=payload, headers={"apikey": EVOLUTION_KEY}, timeout=15)
+    except Exception as e:
+        log.error("Falha ao enviar log WhatsApp: %s", e)
+
+
 # ══════════════════════════════════════════════════════
 # AÇÕES
 # ══════════════════════════════════════════════════════
@@ -540,16 +590,20 @@ def cmd_run():
     raw = buscar_produtos(tema)
     if not raw:
         log.warning("Nenhum produto retornado da API.")
+        enviar_log_whatsapp(None, False, tema, "—")
         return
-    selecionados = curar(raw)
+    selecionados, reprovados = curar(raw)
     if not selecionados:
         log.warning("Nenhum produto passou na curadoria. Silêncio > oferta fraca.")
+        enviar_log_whatsapp(None, False, tema, "—", reprovados)
         return
     p = selecionados[0]
+    keyword_usada = p.get("_keyword", "—")
     ok = enviar(p)
     if ok:
         marcar_enviado(str(p["itemId"]), p.get("productName", ""))
     log.info("Status: %s", "✅ Enviado" if ok else "❌ Falha")
+    enviar_log_whatsapp(p, ok, tema, keyword_usada, reprovados)
 
 
 def cmd_status():
