@@ -266,10 +266,11 @@ def _pct(v) -> float:
 
 TEMAS = {
     "manha": [
-        "café", "chá", "garrafa", "squeeze", "agenda", "planner", "organização",
-        "necessaire", "hidratante", "protetor solar", "fone", "carregador", "mochila",
-        "lancheira", "produtividade", "escritório", "home office", "caderno", "caneta",
-        "suporte", "mousepad", "luminária", "vitamina", "suplemento",
+        "café solúvel", "chá termogênico", "garrafa squeeze", "agenda executiva",
+        "planner 2026", "necessaire viagem", "hidratante facial", "protetor solar facial",
+        "fone bluetooth", "carregador turbo", "mochila notebook", "lancheira térmica",
+        "home office", "caderno espiral", "mousepad gamer", "luminária led mesa",
+        "vitamina c", "whey protein", "smartwatch", "caneta gel",
     ],
     "almoco": [
         "marmita", "pote", "fitness", "academia", "whey", "creatina", "proteína",

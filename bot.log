@@ -1,0 +1,335 @@
+19:30:01 [INFO] ══ Ciclo completo | Modo: PRODUÇÃO 🚀 ══
+19:30:01 [INFO] Buscando produtos na API Shopee...
+19:30:04 [INFO] HTTP Request: POST https://open-api.affiliate.shopee.com.br/graphql "HTTP/1.1 200 OK"
+19:30:04 [ERROR] GraphQL erro [10000]: error [10000]: System Error
+19:30:04 [WARNING] Nenhum produto retornado.
+19:30:04 [INFO] Fila vazia ou nada agendado para agora.
+19:30:04 [INFO] Fila: {'pending': 9, 'sent': 2, 'failed': 0}
+19:40:01 [INFO] ══ Ciclo completo | Modo: PRODUÇÃO 🚀 ══
+19:40:01 [INFO] Buscando produtos na API Shopee...
+19:40:02 [INFO] HTTP Request: POST https://open-api.affiliate.shopee.com.br/graphql "HTTP/1.1 200 OK"
+19:40:02 [INFO] API retornou 50 produtos.
+19:40:02 [INFO] Curadoria: 50 recebidos → 3 aprovados → 3 selecionados
+19:40:02 [INFO] 3 produtos adicionados à fila.
+19:40:06 [INFO] HTTP Request: POST http://localhost:8080/message/sendMedia/mscred "HTTP/1.1 201 Created"
+19:40:06 [INFO] ✅ Enviado: Creatina Monohidratada Pura 1kg, 500g, 600, 300g e 150g - Da
+19:40:06 [INFO] Fila: {'pending': 13, 'sent': 5, 'failed': 0}
+19:46:01 [INFO] ══ Ciclo completo | Modo: PRODUÇÃO 🚀 ══
+19:46:01 [INFO] Buscando produtos [NOITE] — keyword: 'decoração'
+19:46:03 [INFO] HTTP Request: POST https://open-api.affiliate.shopee.com.br/graphql "HTTP/1.1 200 OK"
+19:46:03 [INFO] Pool total para curadoria: 50 produtos.
+19:46:03 [INFO] Tema do horário: NOITE
+19:46:03 [WARNING] Menos de 4 produtos disponíveis. Nada será enviado.
+19:46:03 [WARNING] Nenhum produto passou na curadoria. Silêncio > oferta fraca.
+19:46:12 [INFO] HTTP Request: POST http://localhost:8080/message/sendMedia/mscred "HTTP/1.1 201 Created"
+19:46:12 [INFO] ✅ Enviado: Ração úmida Friskies Sabores Variados para Gatos 15x85 g
+19:46:12 [INFO] Fila: {'pending': 12, 'sent': 6, 'failed': 0}
+20:06:05 [INFO] HTTP Request: POST http://localhost:8080/message/sendMedia/mscred "HTTP/1.1 201 Created"
+20:06:05 [INFO] ✅ Enviado: Creatina Monohidratada Pura 1kg, 500g, 600, 300g e 150g - Da
+20:26:05 [INFO] HTTP Request: POST http://localhost:8080/message/sendMedia/mscred "HTTP/1.1 201 Created"
+20:26:05 [INFO] ✅ Enviado: Ração úmida Friskies Sabores Variados para Gatos 15x85 g
+20:46:05 [INFO] HTTP Request: POST http://localhost:8080/message/sendMedia/mscred "HTTP/1.1 201 Created"
+20:46:05 [INFO] ✅ Enviado: Ração úmida Friskies Sabores Variados para Gatos 15x85 g
+21:06:05 [INFO] HTTP Request: POST http://localhost:8080/message/sendMedia/mscred "HTTP/1.1 201 Created"
+21:06:05 [INFO] ✅ Enviado: Mix Tropical Nuts 1Kg Castanha de Caju do Pará Amendoa Nozes
+09:00:01 [INFO] ══ Ciclo completo | Modo: PRODUÇÃO 🚀 ══
+09:00:01 [INFO] Buscando produtos [MANHA] — keyword: 'caderno'
+09:00:03 [INFO] HTTP Request: POST https://open-api.affiliate.shopee.com.br/graphql "HTTP/1.1 200 OK"
+09:00:03 [INFO] Pool total para curadoria: 50 produtos.
+09:00:03 [INFO] Tema do horário: MANHA
+09:00:03 [WARNING] Menos de 4 produtos disponíveis. Nada será enviado.
+09:00:03 [WARNING] Nenhum produto passou na curadoria. Silêncio > oferta fraca.
+09:00:07 [INFO] HTTP Request: POST http://localhost:8080/message/sendMedia/mscred "HTTP/1.1 201 Created"
+09:00:07 [INFO] ✅ Enviado: Ração úmida Friskies Sabores Variados para Gatos 15x85 g
+09:00:07 [INFO] Fila: {'pending': 7, 'sent': 11, 'failed': 0}
+09:20:05 [INFO] HTTP Request: POST http://localhost:8080/message/sendMedia/mscred "HTTP/1.1 201 Created"
+09:20:05 [INFO] ✅ Enviado: Mix Tropical Nuts 1Kg Castanha de Caju do Pará Amendoa Nozes
+09:40:06 [INFO] HTTP Request: POST http://localhost:8080/message/sendMedia/mscred "HTTP/1.1 201 Created"
+09:40:06 [INFO] ✅ Enviado: Mix Tropical Nuts 1Kg Castanha de Caju do Pará Amendoa Nozes
+10:00:01 [INFO] Fila vazia ou nada agendado para agora.
+10:20:05 [INFO] HTTP Request: POST http://localhost:8080/message/sendMedia/mscred "HTTP/1.1 201 Created"
+10:20:05 [INFO] ✅ Enviado: Chaleira Elétrica Inox 2 Litros 110 v 220 v  para Café Chá A
+12:30:01 [INFO] ══ Ciclo completo | Modo: PRODUÇÃO 🚀 ══
+12:30:01 [INFO] Buscando produtos [ALMOCO] — keyword: 'suporte celular'
+12:30:02 [INFO] HTTP Request: POST https://open-api.affiliate.shopee.com.br/graphql "HTTP/1.1 200 OK"
+12:30:02 [INFO] Pool total para curadoria: 50 produtos.
+12:30:02 [INFO] Tema do horário: ALMOCO
+12:30:02 [WARNING] Menos de 4 produtos disponíveis. Nada será enviado.
+12:30:02 [WARNING] Nenhum produto passou na curadoria. Silêncio > oferta fraca.
+12:30:05 [INFO] HTTP Request: POST http://localhost:8080/message/sendMedia/mscred "HTTP/1.1 201 Created"
+12:30:05 [INFO] ✅ Enviado: Caneca Misturadora Automática Elétrica USB Bateria Recarregá
+12:30:05 [INFO] Fila: {'pending': 2, 'sent': 3, 'failed': 0}
+12:50:04 [INFO] HTTP Request: POST http://localhost:8080/message/sendMedia/mscred "HTTP/1.1 201 Created"
+12:50:04 [INFO] ✅ Enviado: Filtro De Café 103 Inox  -  Coador de Café Grande Sem Uso De
+13:10:04 [INFO] HTTP Request: POST http://localhost:8080/message/sendMedia/mscred "HTTP/1.1 201 Created"
+13:10:04 [INFO] ✅ Enviado: Chaleira Elétrica Jarra 1.8L Café Chá Inox 220v
+13:30:01 [INFO] Fila vazia ou nada agendado para agora.
+13:50:01 [INFO] Fila vazia ou nada agendado para agora.
+19:46:01 [INFO] ══ Ciclo completo | Modo: PRODUÇÃO 🚀 ══
+19:46:01 [INFO] Buscando produtos [NOITE] — keyword: 'vela'
+19:46:03 [INFO] HTTP Request: POST https://open-api.affiliate.shopee.com.br/graphql "HTTP/1.1 200 OK"
+19:46:03 [INFO] Pool total para curadoria: 50 produtos.
+19:46:03 [INFO] Tema do horário: NOITE
+19:46:03 [INFO] Curadoria [NOITE]: 50 recebidos → 7 aprovados → 5 selecionados (5 temáticos)
+19:46:03 [INFO] 5 produtos adicionados à fila.
+19:46:08 [INFO] HTTP Request: POST http://localhost:8080/message/sendMedia/mscred "HTTP/1.1 201 Created"
+19:46:08 [INFO] ✅ Enviado: Kit 4 Acendedores Elétricos USB com Haste Flexível 360° Reca
+19:46:08 [INFO] Fila: {'pending': 4, 'sent': 6, 'failed': 0}
+20:06:01 [INFO] Fila vazia ou nada agendado para agora.
+20:26:06 [INFO] HTTP Request: POST http://localhost:8080/message/sendMedia/mscred "HTTP/1.1 201 Created"
+20:26:06 [INFO] ✅ Enviado: Bobina + Cdi + Vela Kxt  Bicicleta Motorizada 80cc
+20:46:05 [INFO] HTTP Request: POST http://localhost:8080/message/sendMedia/mscred "HTTP/1.1 201 Created"
+20:46:05 [INFO] ✅ Enviado: Kit 4 Acendedores Elétricos USB com Haste Flexível 360° Reca
+21:06:05 [INFO] HTTP Request: POST http://localhost:8080/message/sendMedia/mscred "HTTP/1.1 201 Created"
+21:06:05 [INFO] ✅ Enviado: Kit Potes de Vidros 150ml para Vela Artesanal Tampa Madeira 
+09:00:01 [INFO] ══ Ciclo completo | Modo: PRODUÇÃO 🚀 ══
+09:00:01 [INFO] Buscando produtos [MANHA] — keyword: 'suplemento'
+09:00:04 [INFO] HTTP Request: POST https://open-api.affiliate.shopee.com.br/graphql "HTTP/1.1 200 OK"
+09:00:04 [ERROR] GraphQL erro [10000]: error [10000]: System Error
+09:00:04 [INFO] Menos de 50 resultados, buscando complemento — keyword: 'carregador'
+09:00:06 [INFO] HTTP Request: POST https://open-api.affiliate.shopee.com.br/graphql "HTTP/1.1 200 OK"
+09:00:06 [INFO] Pool total para curadoria: 50 produtos.
+09:00:06 [INFO] Tema do horário: MANHA
+09:00:06 [INFO] Curadoria [MANHA]: 50 recebidos → 4 aprovados → 4 selecionados (4 temáticos)
+09:00:06 [INFO] 4 produtos adicionados à fila.
+09:00:08 [INFO] HTTP Request: POST http://localhost:8080/message/sendMedia/mscred "HTTP/1.1 201 Created"
+09:00:08 [INFO] ✅ Enviado: Kit 20/10/5 Bomboniere Potiche Vidro Canelado Casamento Bati
+09:00:08 [INFO] Fila: {'pending': 4, 'sent': 10, 'failed': 0}
+09:20:03 [INFO] HTTP Request: POST http://localhost:8080/message/sendMedia/mscred "HTTP/1.1 201 Created"
+09:20:03 [INFO] ✅ Enviado: Carregador P/ arminhas de Gel  pistola 4 Pinos sm para Bater
+09:40:03 [INFO] HTTP Request: POST http://localhost:8080/message/sendMedia/mscred "HTTP/1.1 201 Created"
+09:40:03 [INFO] ✅ Enviado: Kit Carregador de Pilhas AA AAA Bateria 9V Bivolt
+10:00:03 [INFO] HTTP Request: POST http://localhost:8080/message/sendMedia/mscred "HTTP/1.1 201 Created"
+10:00:03 [INFO] ✅ Enviado: Carregador de Pilhas Bivolt USB + Pilhas Palito AAA e AA Ori
+10:20:04 [INFO] HTTP Request: POST http://localhost:8080/message/sendMedia/mscred "HTTP/1.1 201 Created"
+10:20:04 [INFO] ✅ Enviado: Carregador de Pilhas USB + pilhas AA e AAA Kapbom Rápido Biv
+12:30:01 [INFO] ══ Ciclo completo | Modo: PRODUÇÃO 🚀 ══
+12:30:01 [INFO] Buscando produtos [ALMOCO] — keyword: 'relógio'
+12:30:04 [INFO] HTTP Request: POST https://open-api.affiliate.shopee.com.br/graphql "HTTP/1.1 200 OK"
+12:30:04 [INFO] Pool total para curadoria: 50 produtos.
+12:30:04 [INFO] Tema do horário: ALMOCO
+12:30:04 [INFO] Curadoria [ALMOCO]: 50 recebidos → 10 aprovados → 5 selecionados (5 temáticos)
+12:30:04 [INFO] 5 produtos adicionados à fila.
+12:30:05 [INFO] HTTP Request: POST http://localhost:8080/message/sendMedia/mscred "HTTP/1.1 201 Created"
+12:30:05 [INFO] ✅ Enviado: 2026 Nova Série 8 Relógio T800 Ultra Smart Watch Esportivo S
+12:30:06 [INFO] Fila: {'pending': 4, 'sent': 15, 'failed': 0}
+12:50:01 [INFO] Fila vazia ou nada agendado para agora.
+13:10:03 [INFO] HTTP Request: POST http://localhost:8080/message/sendMedia/mscred "HTTP/1.1 201 Created"
+13:10:03 [INFO] ✅ Enviado: 2026 smartwatch 9 pro Carregamento sem fio relógio inteligen
+13:30:03 [INFO] HTTP Request: POST http://localhost:8080/message/sendMedia/mscred "HTTP/1.1 201 Created"
+13:30:03 [INFO] ✅ Enviado: 2026 T800 Ultra 3 MAX Mais Recente Smartwatch Relógio Inteli
+13:50:04 [INFO] HTTP Request: POST http://localhost:8080/message/sendMedia/mscred "HTTP/1.1 201 Created"
+13:50:04 [INFO] ✅ Enviado: Kit Completo : Dois Chinelos Slide + Relógio Digital + Carte
+19:46:01 [INFO] ══ Ciclo completo | Modo: PRODUÇÃO 🚀 ══
+19:46:01 [INFO] Buscando produtos [NOITE] — keyword: 'chinelo'
+19:46:02 [INFO] HTTP Request: POST https://open-api.affiliate.shopee.com.br/graphql "HTTP/1.1 200 OK"
+19:46:02 [INFO] Pool total para curadoria: 50 produtos.
+19:46:02 [INFO] Tema do horário: NOITE
+19:46:02 [INFO] Curadoria [NOITE]: 50 recebidos → 13 aprovados → 5 selecionados (5 temáticos)
+19:46:02 [INFO] 5 produtos adicionados à fila.
+19:46:05 [INFO] HTTP Request: POST http://localhost:8080/message/sendMedia/mscred "HTTP/1.1 201 Created"
+19:46:05 [INFO] ✅ Enviado: Lançamento De Smartwatch Relógio Inteligente Com Tela Infini
+19:46:05 [INFO] Fila: {'pending': 5, 'sent': 19, 'failed': 0}
+20:06:03 [INFO] HTTP Request: POST http://localhost:8080/message/sendMedia/mscred "HTTP/1.1 201 Created"
+20:06:03 [INFO] ✅ Enviado: Kit 2 Pares Chinelo + Sandália Feminina Ortopédica Palmilha 
+20:26:03 [INFO] HTTP Request: POST http://localhost:8080/message/sendMedia/mscred "HTTP/1.1 201 Created"
+20:26:03 [INFO] ✅ Enviado: Sapateira com 7 Prateleiras para Organizar Sapatos Calçados 
+20:46:04 [INFO] HTTP Request: POST http://localhost:8080/message/sendMedia/mscred "HTTP/1.1 201 Created"
+20:46:04 [INFO] ✅ Enviado: Sandália Feminina Chinelos de Praia Com Enfeites Luxo Confor
+21:06:03 [INFO] HTTP Request: POST http://localhost:8080/message/sendMedia/mscred "HTTP/1.1 201 Created"
+21:06:03 [INFO] ✅ Enviado: Sandália Feminina Asa Delta Rasteira Conforto Medalhas Doura
+09:00:01 [INFO] ══ Ciclo completo | Modo: PRODUÇÃO 🚀 ══
+09:00:01 [INFO] Buscando produtos [MANHA] — keyword: 'agenda'
+09:00:04 [INFO] HTTP Request: POST https://open-api.affiliate.shopee.com.br/graphql "HTTP/1.1 200 OK"
+09:00:04 [ERROR] GraphQL erro [10000]: error [10000]: System Error
+09:00:04 [INFO] Menos de 50 resultados, buscando complemento — keyword: 'suplemento'
+09:00:06 [INFO] HTTP Request: POST https://open-api.affiliate.shopee.com.br/graphql "HTTP/1.1 200 OK"
+09:00:06 [ERROR] GraphQL erro [10000]: error [10000]: System Error
+09:00:06 [INFO] Pool total para curadoria: 0 produtos.
+09:00:06 [WARNING] Nenhum produto retornado.
+09:00:11 [INFO] HTTP Request: POST http://localhost:8080/message/sendMedia/mscred "HTTP/1.1 201 Created"
+09:00:11 [INFO] ✅ Enviado: Chinelo Cartago Original Alabama Original Leve e Macio com P
+09:00:11 [INFO] Fila: {'pending': 0, 'sent': 24, 'failed': 0}
+09:20:01 [INFO] Fila vazia ou nada agendado para agora.
+09:40:01 [INFO] Fila vazia ou nada agendado para agora.
+10:00:01 [INFO] Fila vazia ou nada agendado para agora.
+10:20:01 [INFO] Fila vazia ou nada agendado para agora.
+12:30:01 [INFO] ══ Ciclo completo | Modo: PRODUÇÃO 🚀 ══
+12:30:01 [INFO] Buscando produtos [ALMOCO] — keyword: 'marmita'
+12:30:03 [INFO] HTTP Request: POST https://open-api.affiliate.shopee.com.br/graphql "HTTP/1.1 200 OK"
+12:30:03 [INFO] Pool total para curadoria: 50 produtos.
+12:30:03 [INFO] Tema do horário: ALMOCO
+12:30:03 [INFO] Curadoria [ALMOCO]: 50 recebidos → 13 aprovados → 5 selecionados (5 temáticos)
+12:30:03 [INFO] 5 produtos adicionados à fila.
+12:30:07 [INFO] HTTP Request: POST http://localhost:8080/message/sendMedia/mscred "HTTP/1.1 201 Created"
+12:30:07 [INFO] ✅ Enviado: Marmita Elétrica Veicular Bivolt P/ Carro Casa Taxi Uber Cam
+12:30:07 [INFO] Fila: {'pending': 4, 'sent': 25, 'failed': 0}
+12:50:01 [INFO] Fila vazia ou nada agendado para agora.
+13:10:05 [INFO] HTTP Request: POST http://localhost:8080/message/sendMedia/mscred "HTTP/1.1 201 Created"
+13:10:05 [INFO] ✅ Enviado: 1.5L Marmita Elétrica Veicular Bivolt P/ Carro Casa Taxi Ube
+13:30:06 [INFO] HTTP Request: POST http://localhost:8080/message/sendMedia/mscred "HTTP/1.1 201 Created"
+13:30:06 [INFO] ✅ Enviado: Kit 5/ kit 10 Potes de Vidro 640ml Hermético Marmita Fit com
+13:50:06 [INFO] HTTP Request: POST http://localhost:8080/message/sendMedia/mscred "HTTP/1.1 201 Created"
+13:50:06 [INFO] ✅ Enviado: 10 Potes Vidro Hermético mantimentos marmita 370ml - Pote He
+19:46:01 [INFO] ══ Ciclo completo | Modo: PRODUÇÃO 🚀 ══
+19:46:01 [INFO] Buscando produtos [NOITE] — keyword: 'cama'
+19:46:02 [INFO] HTTP Request: POST https://open-api.affiliate.shopee.com.br/graphql "HTTP/1.1 200 OK"
+19:46:02 [INFO] Pool total para curadoria: 50 produtos.
+19:46:02 [INFO] Tema do horário: NOITE
+19:46:02 [INFO] Curadoria [NOITE]: 50 recebidos → 10 aprovados → 5 selecionados (5 temáticos)
+19:46:02 [INFO] 5 produtos adicionados à fila.
+19:46:05 [INFO] HTTP Request: POST http://localhost:8080/message/sendMedia/mscred "HTTP/1.1 201 Created"
+19:46:05 [INFO] ✅ Enviado: Kit 5 e 10 Potes De Vidro Hermetico Marmita Fit Mantimento T
+19:46:05 [INFO] Fila: {'pending': 5, 'sent': 29, 'failed': 0}
+20:06:03 [INFO] HTTP Request: POST http://localhost:8080/message/sendMedia/mscred "HTTP/1.1 201 Created"
+20:06:03 [INFO] ✅ Enviado: Mesa Notebook Ergonômica Multiuso Altura Regulável Rodinhas 
+20:26:04 [INFO] HTTP Request: POST http://localhost:8080/message/sendMedia/mscred "HTTP/1.1 201 Created"
+20:26:04 [INFO] ✅ Enviado: Jogo de Lençol Casal Queen 400 Fios Com Elástico 4 Peças Cam
+20:46:04 [INFO] HTTP Request: POST http://localhost:8080/message/sendMedia/mscred "HTTP/1.1 201 Created"
+20:46:04 [INFO] ✅ Enviado: Kit Colcha Cobre Leito Luxo Matelado Casal Padrão,Queen,Solt
+21:06:05 [INFO] HTTP Request: POST http://localhost:8080/message/sendMedia/mscred "HTTP/1.1 201 Created"
+21:06:05 [INFO] ✅ Enviado: Kit Manta Decorativa P + 4 Capas de Almofadas Estampa Digita
+09:00:01 [INFO] ══ Ciclo completo | Modo: PRODUÇÃO 🚀 ══
+09:00:01 [INFO] Buscando produtos [MANHA] — keyword: 'necessaire'
+09:00:02 [INFO] HTTP Request: POST https://open-api.affiliate.shopee.com.br/graphql "HTTP/1.1 200 OK"
+09:00:02 [INFO] Menos de 50 resultados, buscando complemento — keyword: 'caderno'
+09:00:05 [INFO] HTTP Request: POST https://open-api.affiliate.shopee.com.br/graphql "HTTP/1.1 200 OK"
+09:00:05 [INFO] Pool total para curadoria: 50 produtos.
+09:00:05 [INFO] Tema do horário: MANHA
+09:00:05 [WARNING] Menos de 4 produtos disponíveis. Nada será enviado.
+09:00:05 [WARNING] Nenhum produto passou na curadoria. Silêncio > oferta fraca.
+09:00:08 [INFO] HTTP Request: POST http://localhost:8080/message/sendMedia/mscred "HTTP/1.1 201 Created"
+09:00:08 [INFO] ✅ Enviado: Jogo de Cama 400 Fios Percal Flex Ultra Macio Lençol c/ Elás
+09:00:08 [INFO] Fila: {'pending': 0, 'sent': 34, 'failed': 0}
+09:20:01 [INFO] Fila vazia ou nada agendado para agora.
+09:40:01 [INFO] Fila vazia ou nada agendado para agora.
+10:00:01 [INFO] Fila vazia ou nada agendado para agora.
+10:20:01 [INFO] Fila vazia ou nada agendado para agora.
+12:30:01 [INFO] ══ Ciclo completo | Modo: PRODUÇÃO 🚀 ══
+12:30:01 [INFO] Buscando produtos [ALMOCO] — keyword: 'power bank'
+12:30:03 [INFO] HTTP Request: POST https://open-api.affiliate.shopee.com.br/graphql "HTTP/1.1 200 OK"
+12:30:03 [INFO] Pool total para curadoria: 50 produtos.
+12:30:03 [INFO] Tema do horário: ALMOCO
+12:30:03 [INFO] Curadoria [ALMOCO]: 50 recebidos → 24 aprovados → 5 selecionados (5 temáticos)
+12:30:03 [INFO] 5 produtos adicionados à fila.
+12:30:06 [INFO] HTTP Request: POST http://localhost:8080/message/sendMedia/mscred "HTTP/1.1 201 Created"
+12:30:06 [INFO] ✅ Enviado: CARREGADOR PORTÁTIL POWER BANK UNIVERSAL 10.000MAH E 5.000MA
+12:30:06 [INFO] Fila: {'pending': 4, 'sent': 35, 'failed': 0}
+12:50:01 [INFO] Fila vazia ou nada agendado para agora.
+13:10:04 [INFO] HTTP Request: POST http://localhost:8080/message/sendMedia/mscred "HTTP/1.1 201 Created"
+13:10:04 [INFO] ✅ Enviado: Carregador Portátil Power Bank Favo de Mel Bateria Externa 2
+13:30:04 [INFO] HTTP Request: POST http://localhost:8080/message/sendMedia/mscred "HTTP/1.1 201 Created"
+13:30:04 [INFO] ✅ Enviado: Power Bank Solar 50000mAh Carregador Portátil Grande Capacid
+13:50:05 [INFO] HTTP Request: POST http://localhost:8080/message/sendMedia/mscred "HTTP/1.1 201 Created"
+13:50:05 [INFO] ✅ Enviado: Basike Power Bank Turbo 20000mAh 65W TurboCharge，Carregador 
+19:46:01 [INFO] ══ Ciclo completo | Modo: PRODUÇÃO 🚀 ══
+19:46:01 [INFO] Buscando produtos [NOITE] — keyword: 'skincare'
+19:46:02 [INFO] HTTP Request: POST https://open-api.affiliate.shopee.com.br/graphql "HTTP/1.1 200 OK"
+19:46:02 [INFO] Pool total para curadoria: 50 produtos.
+19:46:02 [INFO] Tema do horário: NOITE
+19:46:02 [INFO] Curadoria [NOITE]: 50 recebidos → 17 aprovados → 5 selecionados (3 temáticos)
+19:46:02 [INFO] 5 produtos adicionados à fila.
+19:46:05 [INFO] HTTP Request: POST http://localhost:8080/message/sendMedia/mscred "HTTP/1.1 201 Created"
+19:46:05 [INFO] ✅ Enviado: Carregador Portátil Mini Power Bank 10000mAh Com 02 Saídas T
+19:46:05 [INFO] Fila: {'pending': 5, 'sent': 39, 'failed': 0}
+20:06:04 [INFO] HTTP Request: POST http://localhost:8080/message/sendMedia/mscred "HTTP/1.1 201 Created"
+20:06:04 [INFO] ✅ Enviado: Principia Kit Completo Peles Sensíveis c/ Gel de Limpeza GL-
+20:26:04 [INFO] HTTP Request: POST http://localhost:8080/message/sendMedia/mscred "HTTP/1.1 201 Created"
+20:26:04 [INFO] ✅ Enviado: Principia Kit Peles Sensíveis c/ Gel de Limpeza Gl-02 + Crem
+20:46:05 [INFO] HTTP Request: POST http://localhost:8080/message/sendMedia/mscred "HTTP/1.1 201 Created"
+20:46:05 [INFO] ✅ Enviado: Principia Kit Limpa Hidrata e Protege c/ Gel de Limpeza GL-0
+21:06:03 [INFO] HTTP Request: POST http://localhost:8080/message/sendMedia/mscred "HTTP/1.1 201 Created"
+21:06:03 [INFO] ✅ Enviado: Numbuzin No.9 NAD Bio Lifting Eye Cream 10ml / 20ml
+22:40:01 [INFO] ══ Ciclo completo | Modo: PRODUÇÃO 🚀 ══
+22:40:01 [INFO] Buscando produtos [NOITE] — keyword: 'manta'
+22:40:03 [INFO] HTTP Request: POST https://open-api.affiliate.shopee.com.br/graphql "HTTP/1.1 200 OK"
+22:40:03 [INFO] Pool total para curadoria: 50 produtos.
+22:40:03 [INFO] Tema do horário: NOITE
+22:40:03 [INFO] Curadoria [NOITE]: 50 recebidos → 24 aprovados → 5 selecionados (5 temáticos)
+22:40:03 [INFO] 5 produtos adicionados à fila.
+22:40:05 [INFO] HTTP Request: POST http://localhost:8080/message/sendMedia/mscred "HTTP/1.1 201 Created"
+22:40:05 [INFO] ✅ Enviado: Dr.Althea 345 Relief Cream 15ml,50ml/147 Barrier Cream 50ml
+22:40:05 [INFO] Fila: {'pending': 5, 'sent': 44, 'failed': 0}
+09:00:01 [INFO] ══ Ciclo completo | Modo: PRODUÇÃO 🚀 ══
+09:00:01 [INFO] Buscando produtos [MANHA] — keyword: 'caderno'
+09:00:03 [INFO] HTTP Request: POST https://open-api.affiliate.shopee.com.br/graphql "HTTP/1.1 200 OK"
+09:00:03 [INFO] Pool total para curadoria: 20 produtos.
+09:00:03 [INFO] Tema do horário: MANHA
+09:00:03 [WARNING] Nenhum produto aprovado na curadoria. Nada será enviado.
+09:00:03 [WARNING] Nenhum produto passou na curadoria. Silêncio > oferta fraca.
+09:20:01 [INFO] ══ Ciclo completo | Modo: PRODUÇÃO 🚀 ══
+09:20:01 [INFO] Buscando produtos [MANHA] — keyword: 'café'
+09:20:03 [INFO] HTTP Request: POST https://open-api.affiliate.shopee.com.br/graphql "HTTP/1.1 200 OK"
+09:20:03 [INFO] Pool total para curadoria: 20 produtos.
+09:20:03 [INFO] Tema do horário: MANHA
+09:20:03 [INFO] REPROVADO preço 18.99 — Batedor Misturador Mixer Elétrico para B
+09:20:03 [INFO] REPROVADO preço 19.99 — Pasta De Amendoim Integral Vários Sabore
+09:20:03 [INFO] REPROVADO preço 23.95 — Manicrem Pasta De Amendoim Integral 100%
+09:20:03 [INFO] REPROVADO já enviado — Caneca Misturadora Automática Elétrica U
+09:20:03 [INFO] REPROVADO preço 18.99 — Creme Pasta De Amendoim Deliciosos Sabor
+09:20:03 [INFO] REPROVADO preço 17.99 — Filtro Coador De Café Inox 103/102/101/3
+09:20:03 [INFO] REPROVADO preço 10.99 — Mini Mixer Elétrico Portátil Batedor de 
+09:20:03 [INFO] REPROVADO já enviado — Chaleira Elétrica Jarra 1.8L Café Chá In
+09:20:03 [INFO] REPROVADO preço 14.67 — Aveia Flocos Fino - Terra Vitta
+09:20:03 [INFO] REPROVADO preço 19.99 — Mini Mixer Portátil Misturador de Bebida
+09:20:03 [INFO] REPROVADO preço 19.99 — Coador Filtro De Café Inox 600 Grades De
+09:20:03 [INFO] REPROVADO preço 23.39 — Copo Térmico Café 460ml com Tampa Vedada
+09:20:03 [INFO] REPROVADO preço 24.98 — Copo Térmico de Cafe 450 ml Inox com Dis
+09:20:03 [INFO] Curadoria [MANHA]: 20 recebidos → 7 aprovados → 1 selecionado (score 24.45)
+09:20:05 [INFO] HTTP Request: POST http://localhost:8080/message/sendMedia/mscred "HTTP/1.1 201 Created"
+09:20:05 [INFO] ✅ Enviado: Filtro Coador De Café Inox 103 - Com Pegador em Silicone - P
+09:20:05 [INFO] Status: ✅ Enviado
+09:20:06 [INFO] HTTP Request: POST http://localhost:8080/message/sendText/mscred "HTTP/1.1 201 Created"
+09:40:01 [INFO] ══ Ciclo completo | Modo: PRODUÇÃO 🚀 ══
+09:40:01 [INFO] Buscando produtos [MANHA] — keyword: 'escritório'
+09:40:03 [INFO] HTTP Request: POST https://open-api.affiliate.shopee.com.br/graphql "HTTP/1.1 200 OK"
+09:40:03 [INFO] Pool total para curadoria: 20 produtos.
+09:40:03 [INFO] Tema do horário: MANHA
+09:40:03 [INFO] REPROVADO preço 5.59 — Óculos Pequenos Ovais Com Estampa De Leo
+09:40:03 [INFO] REPROVADO comissão 4.0% / R$2.39 — Lixeira Automática 12 Litros Com Sensor 
+09:40:03 [INFO] REPROVADO preço 6.00 — Perfurador Furador de Papel Alicate 1 Fu
+09:40:03 [INFO] REPROVADO comissão 4.0% / R$2.40 — Lixeira Automática 12 Litros Sensor Infr
+09:40:03 [INFO] REPROVADO preço 13.85 — Carimbo Automático Personalizado - Model
+09:40:03 [INFO] REPROVADO preço 7.93 — Relógio Elegante Com Design De Escala Si
+09:40:03 [INFO] REPROVADO preço 18.89 — Pasta arquivo organizadora expansível co
+09:40:03 [INFO] REPROVADO desconto 2.0% — Cortina PREMIUM 3,00x2,50 Para Sala, Qua
+09:40:03 [INFO] REPROVADO preço 13.99 — Porta Pincel  3 Divisorias Diamante Orga
+09:40:03 [INFO] REPROVADO preço 8.42 — Óculos Anti-Radiação Ultraleve Sem Moldu
+09:40:03 [INFO] REPROVADO preço 16.90 — Kit 3 Quadros Decorativos Leão de Judá F
+09:40:03 [INFO] REPROVADO preço 24.90 — Lixeira Quadrada 13L com Pedal e Tampa M
+09:40:03 [INFO] REPROVADO preço 12.99 — Suporte Tripé Celular Smartphone De Mesa
+09:40:03 [INFO] REPROVADO preço 10.50 — KIT 10 CESTO ORGANIZADOR CESTINHO MULTIU
+09:40:03 [INFO] REPROVADO preço 21.70 — quadro personalizado com a sua foto para
+09:40:03 [INFO] Curadoria [MANHA]: 20 recebidos → 5 aprovados → 1 selecionado (score 19.84)
+09:40:06 [INFO] HTTP Request: POST http://localhost:8080/message/sendMedia/mscred "HTTP/1.1 201 Created"
+09:40:06 [INFO] ✅ Enviado: TOMI MITO Bolsa Feminina Grande para Escritório e Rotina com
+09:40:06 [INFO] Status: ✅ Enviado
+09:40:07 [INFO] HTTP Request: POST http://localhost:8080/message/sendText/mscred "HTTP/1.1 201 Created"
+10:00:01 [INFO] ══ Ciclo completo | Modo: PRODUÇÃO 🚀 ══
+10:00:01 [INFO] Buscando produtos [MANHA] — keyword: 'produtividade'
+10:00:03 [INFO] HTTP Request: POST https://open-api.affiliate.shopee.com.br/graphql "HTTP/1.1 200 OK"
+10:00:03 [INFO] Pool total para curadoria: 20 produtos.
+10:00:03 [INFO] Tema do horário: MANHA
+10:00:03 [INFO] REPROVADO preço 15.00 — 10 Sementes de Mamão Vermelho Taiwanês 🌱
+10:00:03 [INFO] REPROVADO desconto 0.0% — Pomodoro Cube timer Temporizador De Prod
+10:00:03 [INFO] REPROVADO vendas 83 — NPK 20-05-20 Fertilizante Mineral Misto 
+10:00:03 [INFO] REPROVADO vendas 69 — Sementes de Mamão Vermelho Tailandes 🌱 V
+10:00:03 [INFO] REPROVADO vendas 50 — Semente Milho Híbrido AG 1051 Alta Produ
+10:00:03 [INFO] REPROVADO vendas 63 — Kit 5 Linhas 120 Preta | Cone 2 Mil Jard
+10:00:03 [INFO] REPROVADO vendas 47 — Uréia Agrícola 46% 1KG – Fertilizante Ur
+10:00:03 [INFO] REPROVADO vendas 52 — Duo Planner Mensal e Semanal Datado - Se
+10:00:03 [INFO] REPROVADO rating 4.1 — Suporte Para Notebook Antiderrapante Com
+10:00:03 [INFO] REPROVADO vendas 35 — Duo Planner 2026 2 em 1 Planner Semanal 
+10:00:03 [INFO] REPROVADO vendas 48 — 4000 Sementes Alface Americana Alta prod
+10:00:03 [INFO] REPROVADO vendas 13 — Fertilizante Gesso Agrícola Premium 5, 1
+10:00:03 [INFO] REPROVADO vendas 43 — Suplemento Vitamínico ADE 1kg para Recup
+10:00:03 [INFO] REPROVADO vendas 20 — INOVA Kit Completo de Teclado e Mouse co
+10:00:03 [INFO] REPROVADO vendas 16 — 3.000 Sementes de Quiabo Precoce Tropica
+10:00:03 [INFO] REPROVADO vendas 10 — Agenda 2027 Profissional | Executiva | O
+10:00:03 [INFO] REPROVADO vendas 7 — Conjunto Armário Aéreo Suspenso 6 Portas
+10:00:03 [INFO] REPROVADO vendas 1 — F4 Contagem Regressiva Cubo Digital Pomo
+10:00:03 [INFO] REPROVADO vendas 18 — Ração Adm Presence Codornas Alta Produti
+10:00:03 [INFO] REPROVADO vendas 21 — Temporizador De Cubo Digital Rotação De 
+10:00:03 [WARNING] Nenhum produto aprovado na curadoria. Nada será enviado.
+10:00:03 [WARNING] Nenhum produto passou na curadoria. Silêncio > oferta fraca.
+10:00:04 [INFO] HTTP Request: POST http://localhost:8080/message/sendText/mscred "HTTP/1.1 201 Created"
