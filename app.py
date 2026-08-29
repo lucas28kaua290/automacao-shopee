@@ -41,7 +41,7 @@ DB_PATH             = os.getenv("DB_PATH", "shopee.db")
 # Filtros de curadoria
 MIN_RATING          = 4.5
 MIN_SALES           = 100
-MIN_PRICE           = 29.90
+MIN_PRICE           = 25.00
 MAX_PRICE           = 500.0
 MIN_DISCOUNT_PCT    = 10.0
 MIN_COMMISSION_PCT  = 8.0
