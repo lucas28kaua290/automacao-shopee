@@ -279,8 +279,8 @@ TEMAS = {
     ],
     "noite": [
         "casa", "decoração", "luminária", "difusor", "almofada", "manta", "pijama",
-        "chinelo", "pantufa", "hidratante", "skincare", "sono", "relaxamento", "aroma",
-        "vela", "guarda-roupa", "fone", "cama", "banho", "self care", "autocuidado",
+        "chinelo", "pantufa", "hidratante", "skincare", "sono", "relaxamento",
+        "vela", "guarda-roupa", "cama", "banho", "self care", "autocuidado",
     ],
 }
 
