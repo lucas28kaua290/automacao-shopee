@@ -603,35 +603,86 @@ def enviar(p: dict) -> bool:
         log.error("❌ Falha ao enviar item %s: %s", p.get("itemId"), e)
         return False
 
+TEMAS_LABEL = {
+    "manha": "☀️ Manhã",
+    "almoco": "🍽️ Almoço",
+    "noite": "🌙 Noite",
+}
+
+MOTIVOS_LABEL = {
+    "já enviado": "já foi enviado recentemente",
+}
+
+def _motivo_legivel(motivo: str) -> str:
+    if motivo.startswith("rating"):
+        val = motivo.split()[-1]
+        return f"avaliação baixa ({val} estrelas — mínimo 4.5)"
+    if motivo.startswith("vendas"):
+        val = motivo.split()[-1]
+        return f"poucas vendas ({val} — mínimo 100)"
+    if motivo.startswith("preço"):
+        val = motivo.split("R$")[-1]
+        return f"preço fora do intervalo (R${val} — aceito entre R$25,00 e R$500,00)"
+    if motivo.startswith("desconto"):
+        val = motivo.split()[-1]
+        return f"desconto muito baixo ({val} — mínimo 10%)"
+    if motivo.startswith("comissão"):
+        return f"comissão insuficiente ({motivo.split('comissão ')[-1]})"
+    if motivo == "já enviado":
+        return "já foi divulgado recentemente (menos de 7 dias)"
+    return motivo
+
+
 def enviar_log_whatsapp(p: dict | None, ok: bool, tema: str, keyword: str, reprovados: list[dict] = []):
     if not LOG_GROUP_ID or DRY_RUN:
         return
+
+    tema_label = TEMAS_LABEL.get(tema, tema.upper())
+    hora_atual = datetime.now().strftime("%H:%M")
+    keyword_label = keyword if keyword != "—" else "não registrada"
 
     linhas_reprovados = ""
     if reprovados:
         linhas = []
         for r in reprovados:
-            linhas.append(f"  • {r['nome'][:35]} → {r['motivo']}")
-        linhas_reprovados = "\n\n*❌ Reprovados:*\n" + "\n".join(linhas)
+            motivo = _motivo_legivel(r['motivo'])
+            linhas.append(f"  ❌ {r['nome'][:40]}\n      ↳ {motivo}")
+        linhas_reprovados = "\n\n*Produtos analisados e recusados:*\n" + "\n".join(linhas)
 
     if ok and p:
+        score = p.get('_score', 0)
+        desc = int(p.get('_desconto', 0))
+        vendas = int(_f(p.get('sales', 0)))
+        rating = p.get('ratingStar', '')
+
+        if desc >= 30:
+            motivo_aprovacao = f"desconto alto ({desc}% OFF)"
+        elif vendas >= 500:
+            motivo_aprovacao = f"muitas vendas ({vendas} pedidos)"
+        elif float(rating) >= 4.8:
+            motivo_aprovacao = f"avaliação excelente ({rating}⭐)"
+        else:
+            motivo_aprovacao = f"melhor pontuação geral do ciclo"
+
         texto = (
-            f"🤖 *Shopee Bot — Ciclo concluído*\n\n"
-            f"✅ *Enviado com sucesso*\n"
-            f"📦 {p.get('productName', '')[:60]}\n"
-            f"💰 R$ {p.get('_preco', 0):.2f} | {int(p.get('_desconto', 0))}% OFF\n"
-            f"⭐ {p.get('ratingStar', '')} | 🛒 {int(_f(p.get('sales', 0)))} vendidos\n"
-            f"🏷️ Keyword: `{keyword}`\n"
-            f"🎨 Tema: {tema.upper()}\n"
-            f"📊 Score: {p.get('_score', 0):.2f}"
+            f"🤖 *Relatório do Bot — {hora_atual}*\n\n"
+            f"✅ *Produto enviado com sucesso!*\n\n"
+            f"📦 *Produto:* {p.get('productName', '')[:60]}\n"
+            f"💰 *Preço:* R$ {p.get('_preco', 0):.2f} com {desc}% de desconto\n"
+            f"⭐ *Avaliação:* {rating} | 🛒 *Vendas:* {vendas}\n"
+            f"🔍 *Palavra-chave usada:* {keyword_label}\n"
+            f"🕐 *Horário:* {tema_label}\n"
+            f"🏆 *Por que foi escolhido:* {motivo_aprovacao}"
             f"{linhas_reprovados}"
         )
     else:
         texto = (
-            f"🤖 *Shopee Bot — Ciclo concluído*\n\n"
-            f"❌ *Falha ou sem produto aprovado*\n"
-            f"🏷️ Keyword: `{keyword}`\n"
-            f"🎨 Tema: {tema.upper()}"
+            f"🤖 *Relatório do Bot — {hora_atual}*\n\n"
+            f"⚠️ *Nenhum produto foi enviado neste ciclo.*\n\n"
+            f"🔍 *Palavra-chave usada:* {keyword_label}\n"
+            f"🕐 *Horário:* {tema_label}\n\n"
+            f"💡 *O que aconteceu:* nenhum dos {len(reprovados)} produtos encontrados "
+            f"passou nos critérios mínimos de qualidade (avaliação, preço, desconto e comissão)."
             f"{linhas_reprovados}"
         )
 
