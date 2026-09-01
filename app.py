@@ -222,27 +222,31 @@ def _busca_api(keyword: str) -> list[dict]:
     return body.get("data", {}).get("productOfferV2", {}).get("nodes", [])
 
 
-def buscar_produtos(tema: str) -> list[dict]:
+def buscar_produtos(tema: str, tentadas: list[str] = []) -> tuple[list[dict], str]:
     import random
     keywords = TEMAS[tema].copy()
 
-    # Remove keywords já usadas hoje nesse tema
-    disponiveis = [kw for kw in keywords if not keyword_ja_usada_hoje(kw, tema)]
+    # Remove keywords já usadas nos últimos 2 dias E as já tentadas neste loop
+    disponiveis = [kw for kw in keywords if not keyword_ja_usada_hoje(kw, tema) and kw not in tentadas]
 
-    # Se todas já foram usadas hoje, reseta (recomeça do zero)
+    # Se todas já foram usadas, reseta ignorando apenas as tentadas neste loop
     if not disponiveis:
-        log.warning("Todas as keywords do tema [%s] já usadas hoje. Resetando.", tema.upper())
-        disponiveis = keywords
+        log.warning("Todas as keywords do tema [%s] já usadas recentemente. Resetando.", tema.upper())
+        disponiveis = [kw for kw in keywords if kw not in tentadas]
+
+    # Se mesmo assim não tiver nenhuma disponível (todas tentadas neste loop)
+    if not disponiveis:
+        log.warning("Todas as keywords do tema [%s] já tentadas neste loop.", tema.upper())
+        return [], ""
 
     kw = random.choice(disponiveis)
-    marcar_keyword_usada(kw, tema)
     log.info("Buscando produtos [%s] — keyword: '%s'", tema.upper(), kw)
     resultado = _busca_api(kw)
     for item in resultado:
         item["_keyword"] = kw
 
     log.info("Pool total para curadoria: %d produtos.", len(resultado))
-    return resultado
+    return resultado, kw
 
 # ══════════════════════════════════════════════════════
 # CURADORIA
@@ -266,21 +270,39 @@ def _pct(v) -> float:
 
 TEMAS = {
     "manha": [
-        "café solúvel", "chá termogênico", "garrafa squeeze", "agenda executiva",
-        "planner 2026", "necessaire viagem", "hidratante facial", "protetor solar facial",
-        "fone bluetooth", "carregador turbo", "mochila notebook", "lancheira térmica",
-        "home office", "caderno espiral", "mousepad gamer", "luminária led mesa",
-        "vitamina c", "whey protein", "smartwatch", "caneta gel",
+        "café solúvel", "café cápsula", "café gourmet", "garrafa térmica café",
+        "caneca térmica", "copo térmico com tampa", "garrafa de água 1 litro",
+        "garrafa squeeze academia", "agenda executiva", "planner 2026",
+        "planner semanal", "caderno inteligente", "caneta marca texto pastel",
+        "suporte para celular mesa", "despertador digital", "luminária led mesa",
+        "fone bluetooth", "smartwatch masculino", "smartwatch feminino",
+        "escova secadora", "secador de cabelo portátil", "modelador de cachos",
+        "escova alisadora", "espelho de maquiagem com led", "organizador de maquiagem",
+        "necessaire viagem", "protetor solar facial", "hidratante facial",
+        "massageador facial", "carregador turbo",
     ],
     "almoco": [
-        "marmita", "pote", "fitness", "academia", "whey", "creatina", "proteína",
-        "tênis", "camiseta", "dry fit", "fone bluetooth", "power bank", "suporte celular",
-        "caneca", "garrafa térmica", "lanche", "snack", "bolsa térmica", "relógio",
+        "marmita fitness", "marmita 3 divisórias", "marmita térmica elétrica",
+        "pote hermético marmita", "kit potes marmita", "talheres portáteis",
+        "garrafa térmica inox", "garrafa de água com marcador", "coqueteleira academia",
+        "shaker de academia", "balança de cozinha digital", "mini processador de alimentos",
+        "liquidificador portátil usb", "air fryer pequena", "forma de silicone air fryer",
+        "organizador de temperos", "faca de cozinha profissional",
+        "tábua de corte antibacteriana", "lancheira térmica", "mochila térmica",
+        "power bank 10000mah", "power bank 20000mah", "carregador portátil usb c",
+        "fone bluetooth esportivo", "suporte celular carro", "smartwatch esportivo",
     ],
     "noite": [
-        "casa", "decoração", "luminária", "difusor", "almofada", "manta", "pijama",
-        "chinelo", "pantufa", "hidratante", "skincare", "sono", "relaxamento",
-        "vela", "guarda-roupa", "cama", "banho", "self care", "autocuidado",
+        "jogo de lençol casal 400 fios", "jogo de cama queen 400 fios",
+        "fronha cetim", "manta para sofá", "manta casal cobertor",
+        "tapete felpudo sala", "tapete antiderrapante banheiro",
+        "almofada decorativa", "capa para almofada", "cortina blackout",
+        "cortina para sala", "luminária de cabeceira", "luminária lua",
+        "luz led quarto", "fita led rgb", "abajur moderno",
+        "difusor de aromas", "difusor elétrico aromatizador",
+        "aromatizador de ambiente", "vela aromática", "organizador de guarda roupa",
+        "caixa organizadora", "espelho de corpo inteiro", "massageador elétrico",
+        "pijama feminino", "pantufa feminina", "skincare", "autocuidado",
     ],
 }
 
@@ -633,7 +655,7 @@ def _motivo_legivel(motivo: str) -> str:
     return motivo
 
 
-def enviar_log_whatsapp(p: dict | None, ok: bool, tema: str, keyword: str, reprovados: list[dict] = []):
+def enviar_log_whatsapp(p: dict | None, ok: bool, tema: str, keyword: str, reprovados: list[dict] = [], tentativas: int = 1, tentadas: list[str] = []):
     if not LOG_GROUP_ID or DRY_RUN:
         return
 
@@ -648,6 +670,13 @@ def enviar_log_whatsapp(p: dict | None, ok: bool, tema: str, keyword: str, repro
             motivo = _motivo_legivel(r['motivo'])
             linhas.append(f"  ❌ {r['nome'][:40]}\n      ↳ {motivo}")
         linhas_reprovados = "\n\n*Produtos analisados e recusados:*\n" + "\n".join(linhas)
+
+    linhas_tentadas = ""
+    if tentadas:
+        linhas_tentadas = "\n\n*🔄 Palavras-chave tentadas neste ciclo:*\n"
+        for i, kw in enumerate(tentadas, 1):
+            status_kw = "✅ postou" if kw == keyword and ok else "❌ sem resultado"
+            linhas_tentadas += f"  {i}. `{kw}` — {status_kw}\n"
 
     if ok and p:
         score = p.get('_score', 0)
@@ -672,17 +701,20 @@ def enviar_log_whatsapp(p: dict | None, ok: bool, tema: str, keyword: str, repro
             f"⭐ *Avaliação:* {rating} | 🛒 *Vendas:* {vendas}\n"
             f"🔍 *Palavra-chave usada:* {keyword_label}\n"
             f"🕐 *Horário:* {tema_label}\n"
-            f"🏆 *Por que foi escolhido:* {motivo_aprovacao}"
+            f"🏆 *Por que foi escolhido:* {motivo_aprovacao}\n"
+            f"🔁 *Tentativas realizadas:* {tentativas} de {MAX_TENTATIVAS}"
+            f"{linhas_tentadas}"
             f"{linhas_reprovados}"
         )
     else:
         texto = (
             f"🤖 *Relatório do Bot — {hora_atual}*\n\n"
             f"⚠️ *Nenhum produto foi enviado neste ciclo.*\n\n"
-            f"🔍 *Palavra-chave usada:* {keyword_label}\n"
-            f"🕐 *Horário:* {tema_label}\n\n"
-            f"💡 *O que aconteceu:* nenhum dos {len(reprovados)} produtos encontrados "
-            f"passou nos critérios mínimos de qualidade (avaliação, preço, desconto e comissão)."
+            f"🕐 *Horário:* {tema_label}\n"
+            f"🔁 *Tentativas realizadas:* {tentativas} de {MAX_TENTATIVAS}\n\n"
+            f"💡 *O que aconteceu:* nenhuma das {tentativas} tentativas trouxe "
+            f"produto aprovado nos critérios de qualidade."
+            f"{linhas_tentadas}"
             f"{linhas_reprovados}"
         )
 
@@ -708,26 +740,50 @@ def cmd_send():
     log.info("cmd_send chamado diretamente — use cmd_run para o ciclo completo.")
 
 
+MAX_TENTATIVAS = 5
+
 def cmd_run():
     log.info("══ Ciclo completo | Modo: %s ══", "DRY RUN 🧪" if DRY_RUN else "PRODUÇÃO 🚀")
     tema = _detectar_tema()
-    raw = buscar_produtos(tema)
-    if not raw:
-        log.warning("Nenhum produto retornado da API.")
-        enviar_log_whatsapp(None, False, tema, "—")
+    tentadas = []
+    todos_reprovados = []
+
+    for tentativa in range(1, MAX_TENTATIVAS + 1):
+        log.info("Tentativa %d/%d", tentativa, MAX_TENTATIVAS)
+
+        raw, kw = buscar_produtos(tema, tentadas)
+
+        if not kw:
+            log.warning("Sem keywords disponíveis para tentar.")
+            break
+
+        tentadas.append(kw)
+
+        if not raw:
+            log.warning("Nenhum produto retornado da API para keyword '%s'.", kw)
+            continue
+
+        selecionados, reprovados = curar(raw)
+        todos_reprovados.extend(reprovados)
+
+        if not selecionados:
+            log.warning("Nenhum produto aprovado na tentativa %d (keyword: '%s').", tentativa, kw)
+            continue
+
+        # Achou produto aprovado!
+        p = selecionados[0]
+        keyword_usada = p.get("_keyword", "—")
+        ok = enviar(p)
+        if ok:
+            marcar_enviado(str(p["itemId"]), p.get("productName", ""))
+            marcar_keyword_usada(keyword_usada, tema)  # só bloqueia se postou
+        log.info("Status: %s (tentativa %d)", "✅ Enviado" if ok else "❌ Falha", tentativa)
+        enviar_log_whatsapp(p, ok, tema, keyword_usada, todos_reprovados, tentativa, tentadas)
         return
-    selecionados, reprovados = curar(raw)
-    if not selecionados:
-        log.warning("Nenhum produto passou na curadoria. Silêncio > oferta fraca.")
-        enviar_log_whatsapp(None, False, tema, "—", reprovados)
-        return
-    p = selecionados[0]
-    keyword_usada = p.get("_keyword", "—")
-    ok = enviar(p)
-    if ok:
-        marcar_enviado(str(p["itemId"]), p.get("productName", ""))
-    log.info("Status: %s", "✅ Enviado" if ok else "❌ Falha")
-    enviar_log_whatsapp(p, ok, tema, keyword_usada, reprovados)
+
+    # Esgotou as tentativas sem postar
+    log.warning("Esgotadas %d tentativas sem produto aprovado.", MAX_TENTATIVAS)
+    enviar_log_whatsapp(None, False, tema, "—", todos_reprovados, MAX_TENTATIVAS, tentadas)
 
 
 def cmd_status():
